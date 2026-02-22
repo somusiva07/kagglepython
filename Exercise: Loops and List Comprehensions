@@ -1,1 +1,1130 @@
-{"metadata":{"kernelspec":{"display_name":"Python 3","language":"python","name":"python3"},"language_info":{"name":"python","version":"3.11.13","mimetype":"text/x-python","codemirror_mode":{"name":"ipython","version":3},"pygments_lexer":"ipython3","nbconvert_exporter":"python","file_extension":".py"},"learntools_metadata":{"lesson_index":4,"type":"exercise"},"kaggle":{"accelerator":"none","dataSources":[],"dockerImageVersionId":31153,"isInternetEnabled":false,"language":"python","sourceType":"notebook","isGpuEnabled":false}},"nbformat_minor":4,"nbformat":4,"cells":[{"cell_type":"markdown","source":"**This notebook is an exercise in the [Python](https://www.kaggle.com/learn/python) course.  You can reference the tutorial at [this link](https://www.kaggle.com/colinmorris/loops-and-list-comprehensions).**\n\n---\n","metadata":{}},{"cell_type":"markdown","source":"With all you've learned, you can start writing much more interesting programs. See if you can solve the problems below.\n\nAs always, run the setup code below before working on the questions.","metadata":{}},{"cell_type":"code","source":"from learntools.core import binder; binder.bind(globals())\nfrom learntools.python.ex5 import *\nprint('Setup complete.')","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:32:51.010632Z","iopub.execute_input":"2026-02-22T05:32:51.010917Z","iopub.status.idle":"2026-02-22T05:32:53.509594Z","shell.execute_reply.started":"2026-02-22T05:32:51.010889Z","shell.execute_reply":"2026-02-22T05:32:53.508044Z"}},"outputs":[{"name":"stdout","text":"Setup complete.\n","output_type":"stream"}],"execution_count":1},{"cell_type":"markdown","source":"# 1.\n\nHave you ever felt debugging involved a bit of luck? The following program has a bug. Try to identify the bug and fix it.","metadata":{}},{"cell_type":"code","source":"def has_lucky_number(nums):\n    \"\"\"Return whether the given list of numbers is lucky. A lucky list contains\n    at least one number divisible by 7.\n    \"\"\"\n    for num in nums:\n        if num % 7 == 0:\n            return True\n        else:\n            return False","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:33:23.096531Z","iopub.execute_input":"2026-02-22T05:33:23.097445Z","iopub.status.idle":"2026-02-22T05:33:23.103135Z","shell.execute_reply.started":"2026-02-22T05:33:23.097405Z","shell.execute_reply":"2026-02-22T05:33:23.102122Z"}},"outputs":[],"execution_count":3},{"cell_type":"markdown","source":"Try to identify the bug and fix it in the cell below:","metadata":{}},{"cell_type":"code","source":"def has_lucky_number(nums):\n    \"\"\"Return whether the given list of numbers is lucky. A lucky list contains\n    at least one number divisible by 7.\n    \"\"\"\n    for num in nums:\n        if num % 7 == 0:\n            return True\n    return False\n\n# Check your answer\nq1.check()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:42:27.108064Z","iopub.execute_input":"2026-02-22T05:42:27.108381Z","iopub.status.idle":"2026-02-22T05:42:27.118766Z","shell.execute_reply.started":"2026-02-22T05:42:27.108361Z","shell.execute_reply":"2026-02-22T05:42:27.117220Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Correct: \n\nRemember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n\n```python\ndef has_lucky_number(nums):\n    for num in nums:\n        if num % 7 == 0:\n            return True\n    # We've exhausted the list without finding a lucky number\n    return False\n```\n\nHere's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n\n```python\ndef has_lucky_number(nums):\n    return any([num % 7 == 0 for num in nums])\n```","text/markdown":"<span style=\"color:#33cc33\">Correct:</span> \n\nRemember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n\n```python\ndef has_lucky_number(nums):\n    for num in nums:\n        if num % 7 == 0:\n            return True\n    # We've exhausted the list without finding a lucky number\n    return False\n```\n\nHere's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n\n```python\ndef has_lucky_number(nums):\n    return any([num % 7 == 0 for num in nums])\n```\n"},"metadata":{}}],"execution_count":18},{"cell_type":"code","source":"q1.hint()\nq1.solution()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:40:30.837317Z","iopub.execute_input":"2026-02-22T05:40:30.838038Z","iopub.status.idle":"2026-02-22T05:40:30.850193Z","shell.execute_reply.started":"2026-02-22T05:40:30.838006Z","shell.execute_reply":"2026-02-22T05:40:30.849248Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 2, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Hint: How many times does the body of the loop run for a list of length n? (If you're not sure, try adding a `print()` call on the line before the `if`.)","text/markdown":"<span style=\"color:#3366cc\">Hint:</span> How many times does the body of the loop run for a list of length n? (If you're not sure, try adding a `print()` call on the line before the `if`.)"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Solution: Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n\n```python\ndef has_lucky_number(nums):\n    for num in nums:\n        if num % 7 == 0:\n            return True\n    # We've exhausted the list without finding a lucky number\n    return False\n```\n\nHere's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n\n```python\ndef has_lucky_number(nums):\n    return any([num % 7 == 0 for num in nums])\n```","text/markdown":"<span style=\"color:#33cc99\">Solution:</span> Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n\n```python\ndef has_lucky_number(nums):\n    for num in nums:\n        if num % 7 == 0:\n            return True\n    # We've exhausted the list without finding a lucky number\n    return False\n```\n\nHere's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n\n```python\ndef has_lucky_number(nums):\n    return any([num % 7 == 0 for num in nums])\n```\n"},"metadata":{}}],"execution_count":17},{"cell_type":"markdown","source":"# 2.\nLook at the Python expression below. What do you think we'll get when we run it? When you've made your prediction, uncomment the code and run the cell to see if you were right.","metadata":{}},{"cell_type":"code","source":"#[1, 2, 3, 4] > 2","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:43:14.769374Z","iopub.execute_input":"2026-02-22T05:43:14.770642Z","iopub.status.idle":"2026-02-22T05:43:14.775170Z","shell.execute_reply.started":"2026-02-22T05:43:14.770602Z","shell.execute_reply":"2026-02-22T05:43:14.773929Z"}},"outputs":[],"execution_count":19},{"cell_type":"markdown","source":"R and Python have some libraries (like numpy and pandas) compare each element of the list to 2 (i.e. do an 'element-wise' comparison) and give us a list of booleans like `[False, False, True, True]`. \n\nImplement a function that reproduces this behaviour, returning a list of booleans corresponding to whether the corresponding element is greater than n.","metadata":{}},{"cell_type":"code","source":"def elementwise_greater_than(L, thresh):\n    \"\"\"Return a list with the same length as L, where the value at index i is \n    True if L[i] is greater than thresh, and False otherwise.\n    \n    >>> elementwise_greater_than([1, 2, 3, 4], 2)\n    [False, False, True, True]\n    \"\"\"\n    a = []\n    cnt = -1 ;\n    for i in L:\n        cnt = cnt + 1;\n        print(cnt)\n        if i > thresh:\n            a.append(True)\n        else:\n            a.append(False)\n    \n    print(a)\n    return a\n# Check your answer\nq2.check()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:54:06.167437Z","iopub.execute_input":"2026-02-22T05:54:06.168384Z","iopub.status.idle":"2026-02-22T05:54:06.178212Z","shell.execute_reply.started":"2026-02-22T05:54:06.168354Z","shell.execute_reply":"2026-02-22T05:54:06.177133Z"}},"outputs":[{"name":"stdout","text":"0\n1\n2\n3\n[False, False, True, True]\n0\n1\n2\n3\n[False, False, False, False]\n[]\n0\n1\n[True, True]\n","output_type":"stream"},{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"2_ElementWiseComparison\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Correct: \n\nHere's one solution:\n```python\ndef elementwise_greater_than(L, thresh):\n    res = []\n    for ele in L:\n        res.append(ele > thresh)\n    return res\n```\n\nAnd here's the list comprehension version:\n```python\ndef elementwise_greater_than(L, thresh):\n    return [ele > thresh for ele in L]\n```","text/markdown":"<span style=\"color:#33cc33\">Correct:</span> \n\nHere's one solution:\n```python\ndef elementwise_greater_than(L, thresh):\n    res = []\n    for ele in L:\n        res.append(ele > thresh)\n    return res\n```\n\nAnd here's the list comprehension version:\n```python\ndef elementwise_greater_than(L, thresh):\n    return [ele > thresh for ele in L]\n```\n"},"metadata":{}}],"execution_count":34},{"cell_type":"code","source":"q2.solution()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:51:39.289479Z","iopub.execute_input":"2026-02-22T05:51:39.289989Z","iopub.status.idle":"2026-02-22T05:51:39.298303Z","shell.execute_reply.started":"2026-02-22T05:51:39.289965Z","shell.execute_reply":"2026-02-22T05:51:39.297230Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"2_ElementWiseComparison\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Solution: Here's one solution:\n```python\ndef elementwise_greater_than(L, thresh):\n    res = []\n    for ele in L:\n        res.append(ele > thresh)\n    return res\n```\n\nAnd here's the list comprehension version:\n```python\ndef elementwise_greater_than(L, thresh):\n    return [ele > thresh for ele in L]\n```","text/markdown":"<span style=\"color:#33cc99\">Solution:</span> Here's one solution:\n```python\ndef elementwise_greater_than(L, thresh):\n    res = []\n    for ele in L:\n        res.append(ele > thresh)\n    return res\n```\n\nAnd here's the list comprehension version:\n```python\ndef elementwise_greater_than(L, thresh):\n    return [ele > thresh for ele in L]\n```\n"},"metadata":{}}],"execution_count":31},{"cell_type":"markdown","source":"# 3.\n\nComplete the body of the function below according to its docstring.","metadata":{}},{"cell_type":"code","source":"def menu_is_boring(meals):\n    \"\"\"Given a list of meals served over some period of time, return True if the\n    same meal has ever been served two days in a row, and False otherwise.\n    \"\"\"\n    for meal in range(len(meals)-1):\n        if meals[meal]==meals[meal+1]:\n            return True\n    return False\n        \n\n# Check your answer\nq3.check()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T06:02:28.267549Z","iopub.execute_input":"2026-02-22T06:02:28.267865Z","iopub.status.idle":"2026-02-22T06:02:28.278545Z","shell.execute_reply.started":"2026-02-22T06:02:28.267839Z","shell.execute_reply":"2026-02-22T06:02:28.277538Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Correct: \n\n\n\n```python\ndef menu_is_boring(meals):\n    # Iterate over all indices of the list, except the last one\n    for i in range(len(meals)-1):\n        if meals[i] == meals[i+1]:\n            return True\n    return False\n```\n\nThe key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n\nBut don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.","text/markdown":"<span style=\"color:#33cc33\">Correct:</span> \n\n\n\n```python\ndef menu_is_boring(meals):\n    # Iterate over all indices of the list, except the last one\n    for i in range(len(meals)-1):\n        if meals[i] == meals[i+1]:\n            return True\n    return False\n```\n\nThe key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n\nBut don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.\n"},"metadata":{}}],"execution_count":41},{"cell_type":"code","source":"q3.hint()\nq3.solution()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T05:58:32.216885Z","iopub.execute_input":"2026-02-22T05:58:32.217827Z","iopub.status.idle":"2026-02-22T05:58:32.228117Z","shell.execute_reply.started":"2026-02-22T05:58:32.217792Z","shell.execute_reply":"2026-02-22T05:58:32.227050Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 2, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Hint: This is a case where it may be preferable to iterate over the *indices* of the list (using a call to `range()`) rather than iterating over the elements of the list itself. When indexing into the list, be mindful that you're not \"falling off the end\" (i.e. using an index that doesn't exist).","text/markdown":"<span style=\"color:#3366cc\">Hint:</span> This is a case where it may be preferable to iterate over the *indices* of the list (using a call to `range()`) rather than iterating over the elements of the list itself. When indexing into the list, be mindful that you're not \"falling off the end\" (i.e. using an index that doesn't exist)."},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Solution: \n\n```python\ndef menu_is_boring(meals):\n    # Iterate over all indices of the list, except the last one\n    for i in range(len(meals)-1):\n        if meals[i] == meals[i+1]:\n            return True\n    return False\n```\n\nThe key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n\nBut don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.","text/markdown":"<span style=\"color:#33cc99\">Solution:</span> \n\n```python\ndef menu_is_boring(meals):\n    # Iterate over all indices of the list, except the last one\n    for i in range(len(meals)-1):\n        if meals[i] == meals[i+1]:\n            return True\n    return False\n```\n\nThe key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n\nBut don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.\n"},"metadata":{}}],"execution_count":36},{"cell_type":"markdown","source":"# 4. <span title=\"A bit spicy\" style=\"color: darkgreen \">🌶️</span>\n\nNext to the Blackjack table, the Python Challenge Casino has a slot machine. You can get a result from the slot machine by calling `play_slot_machine()`. The number it returns is your winnings in dollars. Usually it returns 0.  But sometimes you'll get lucky and get a big payday. Try running it below:","metadata":{}},{"cell_type":"code","source":"play_slot_machine()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T06:03:04.910084Z","iopub.execute_input":"2026-02-22T06:03:04.910366Z","iopub.status.idle":"2026-02-22T06:03:04.917537Z","shell.execute_reply.started":"2026-02-22T06:03:04.910346Z","shell.execute_reply":"2026-02-22T06:03:04.916519Z"}},"outputs":[{"execution_count":53,"output_type":"execute_result","data":{"text/plain":"0"},"metadata":{}}],"execution_count":53},{"cell_type":"markdown","source":"By the way, did we mention that each play costs $1? Don't worry, we'll send you the bill later.\n\nOn average, how much money can you expect to gain (or lose) every time you play the machine?  The casino keeps it a secret, but you can estimate the average value of each pull using a technique called the **Monte Carlo method**. To estimate the average outcome, we simulate the scenario many times, and return the average result.\n\nComplete the following function to calculate the average value per play of the slot machine.","metadata":{}},{"cell_type":"code","source":"def estimate_average_slot_payout(n_runs):\n    \"\"\"Run the slot machine n_runs times and return the average net profit per run.\n    Example calls (note that return value is nondeterministic!):\n    >>> estimate_average_slot_payout(1)\n    -1\n    >>> estimate_average_slot_payout(1)\n    0.5\n    \"\"\"\n    return n_runs/n_runs","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T06:06:42.474594Z","iopub.execute_input":"2026-02-22T06:06:42.475345Z","iopub.status.idle":"2026-02-22T06:06:42.480051Z","shell.execute_reply.started":"2026-02-22T06:06:42.475316Z","shell.execute_reply":"2026-02-22T06:06:42.479034Z"}},"outputs":[],"execution_count":65},{"cell_type":"markdown","source":"When you think you know the expected value per spin, run the code cell below to view the solution and get credit for answering the question.","metadata":{}},{"cell_type":"code","source":"# Check your answer (Run this code cell to receive credit!)\nq4.solution()","metadata":{"trusted":true,"execution":{"iopub.status.busy":"2026-02-22T06:06:48.993305Z","iopub.execute_input":"2026-02-22T06:06:48.993747Z","iopub.status.idle":"2026-02-22T06:06:49.002401Z","shell.execute_reply.started":"2026-02-22T06:06:48.993703Z","shell.execute_reply":"2026-02-22T06:06:49.001224Z"}},"outputs":[{"output_type":"display_data","data":{"text/plain":"<IPython.core.display.Javascript object>","application/javascript":"parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 4, \"questionId\": \"4_ExpectedSlotsPayout\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"},"metadata":{}},{"output_type":"display_data","data":{"text/plain":"Solution: \n    \nThe exact expected value of one pull of the slot machine is 0.025 - i.e. a little more than 2 cents.  See?  Not every game in the Python Challenge Casino is rigged against the player!\n\nIn order to get this answer, you'll need to implement the `estimate_average_slot_payout(n_runs)` function to simulate pulling the slot machine `n_runs` times.  It should return the payout averaged over those `n_runs`.\n\nThen, once the function is defined, in order to estimate the average slot payout, we need only call the function.\n\nBecause of the high variance of the outcome (there are some very rare high payout results that significantly affect the average) you might need to run your function with a very high value of `n_runs` to get a stable answer close to the true expectation.  For instance, you might use a value for `n_runs` of 1000000.\n\nHere's an example for how the function could look:\n```python\ndef estimate_average_slot_payout(n_runs):\n    # Play slot machine n_runs times, calculate payout of each\n    payouts = [play_slot_machine()-1 for i in range(n_runs)]\n    # Calculate the average value\n    avg_payout = sum(payouts) / n_runs\n    return avg_payout\n    \nestimate_average_slot_payout(10000000)\n\n```\n\nThis should return an answer close to 0.025!\n            ","text/markdown":"<span style=\"color:#33cc99\">Solution:</span> \n    \nThe exact expected value of one pull of the slot machine is 0.025 - i.e. a little more than 2 cents.  See?  Not every game in the Python Challenge Casino is rigged against the player!\n\nIn order to get this answer, you'll need to implement the `estimate_average_slot_payout(n_runs)` function to simulate pulling the slot machine `n_runs` times.  It should return the payout averaged over those `n_runs`.\n\nThen, once the function is defined, in order to estimate the average slot payout, we need only call the function.\n\nBecause of the high variance of the outcome (there are some very rare high payout results that significantly affect the average) you might need to run your function with a very high value of `n_runs` to get a stable answer close to the true expectation.  For instance, you might use a value for `n_runs` of 1000000.\n\nHere's an example for how the function could look:\n```python\ndef estimate_average_slot_payout(n_runs):\n    # Play slot machine n_runs times, calculate payout of each\n    payouts = [play_slot_machine()-1 for i in range(n_runs)]\n    # Calculate the average value\n    avg_payout = sum(payouts) / n_runs\n    return avg_payout\n    \nestimate_average_slot_payout(10000000)\n\n```\n\nThis should return an answer close to 0.025!\n            \n"},"metadata":{}}],"execution_count":66},{"cell_type":"markdown","source":"# Keep Going\n\nMany programmers report that dictionaries are their favorite data structure. You'll get to **[learn about them](https://www.kaggle.com/colinmorris/strings-and-dictionaries)** (as well as strings) in the next lesson.","metadata":{}},{"cell_type":"markdown","source":"---\n\n\n\n\n*Have questions or comments? Visit the [course discussion forum](https://www.kaggle.com/learn/python/discussion) to chat with other learners.*","metadata":{}}]}
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "dc7b972b",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004468,
+     "end_time": "2026-02-22T06:10:59.190100",
+     "exception": false,
+     "start_time": "2026-02-22T06:10:59.185632",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "**This notebook is an exercise in the [Python](https://www.kaggle.com/learn/python) course.  You can reference the tutorial at [this link](https://www.kaggle.com/colinmorris/loops-and-list-comprehensions).**\n",
+    "\n",
+    "---\n"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e326071c",
+   "metadata": {
+    "papermill": {
+     "duration": 0.002571,
+     "end_time": "2026-02-22T06:10:59.195819",
+     "exception": false,
+     "start_time": "2026-02-22T06:10:59.193248",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "With all you've learned, you can start writing much more interesting programs. See if you can solve the problems below.\n",
+    "\n",
+    "As always, run the setup code below before working on the questions."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 1,
+   "id": "7f4e792f",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:10:59.202908Z",
+     "iopub.status.busy": "2026-02-22T06:10:59.202567Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.011771Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.009136Z"
+    },
+    "papermill": {
+     "duration": 1.814783,
+     "end_time": "2026-02-22T06:11:01.013481",
+     "exception": false,
+     "start_time": "2026-02-22T06:10:59.198698",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "Setup complete.\n"
+     ]
+    }
+   ],
+   "source": [
+    "from learntools.core import binder; binder.bind(globals())\n",
+    "from learntools.python.ex5 import *\n",
+    "print('Setup complete.')"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "22d0e9e3",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003119,
+     "end_time": "2026-02-22T06:11:01.020412",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.017293",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# 1.\n",
+    "\n",
+    "Have you ever felt debugging involved a bit of luck? The following program has a bug. Try to identify the bug and fix it."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 2,
+   "id": "c1ae1833",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.029175Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.028083Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.034384Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.033451Z"
+    },
+    "papermill": {
+     "duration": 0.012023,
+     "end_time": "2026-02-22T06:11:01.035854",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.023831",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "def has_lucky_number(nums):\n",
+    "    \"\"\"Return whether the given list of numbers is lucky. A lucky list contains\n",
+    "    at least one number divisible by 7.\n",
+    "    \"\"\"\n",
+    "    for num in nums:\n",
+    "        if num % 7 == 0:\n",
+    "            return True\n",
+    "        else:\n",
+    "            return False"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "e46d3cf3",
+   "metadata": {
+    "papermill": {
+     "duration": 0.002827,
+     "end_time": "2026-02-22T06:11:01.042362",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.039535",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "Try to identify the bug and fix it in the cell below:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 3,
+   "id": "f5f92ffc",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.051450Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.050914Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.063685Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.062695Z"
+    },
+    "papermill": {
+     "duration": 0.019183,
+     "end_time": "2026-02-22T06:11:01.065036",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.045853",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc33\">Correct:</span> \n",
+       "\n",
+       "Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    for num in nums:\n",
+       "        if num % 7 == 0:\n",
+       "            return True\n",
+       "    # We've exhausted the list without finding a lucky number\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "Here's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    return any([num % 7 == 0 for num in nums])\n",
+       "```\n"
+      ],
+      "text/plain": [
+       "Correct: \n",
+       "\n",
+       "Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    for num in nums:\n",
+       "        if num % 7 == 0:\n",
+       "            return True\n",
+       "    # We've exhausted the list without finding a lucky number\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "Here's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    return any([num % 7 == 0 for num in nums])\n",
+       "```"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "def has_lucky_number(nums):\n",
+    "    \"\"\"Return whether the given list of numbers is lucky. A lucky list contains\n",
+    "    at least one number divisible by 7.\n",
+    "    \"\"\"\n",
+    "    for num in nums:\n",
+    "        if num % 7 == 0:\n",
+    "            return True\n",
+    "    return False\n",
+    "\n",
+    "# Check your answer\n",
+    "q1.check()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 4,
+   "id": "d2c9fade",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.073029Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.072783Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.083996Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.082806Z"
+    },
+    "papermill": {
+     "duration": 0.017458,
+     "end_time": "2026-02-22T06:11:01.086052",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.068594",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 2, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#3366cc\">Hint:</span> How many times does the body of the loop run for a list of length n? (If you're not sure, try adding a `print()` call on the line before the `if`.)"
+      ],
+      "text/plain": [
+       "Hint: How many times does the body of the loop run for a list of length n? (If you're not sure, try adding a `print()` call on the line before the `if`.)"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"1_EarlyExitDebugging\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc99\">Solution:</span> Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    for num in nums:\n",
+       "        if num % 7 == 0:\n",
+       "            return True\n",
+       "    # We've exhausted the list without finding a lucky number\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "Here's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    return any([num % 7 == 0 for num in nums])\n",
+       "```\n"
+      ],
+      "text/plain": [
+       "Solution: Remember that `return` causes a function to exit immediately. So our original implementation always ran for just one iteration. We can only return `False` if we've looked at every element of the list (and confirmed that none of them are lucky). Though we can return early if the answer is `True`:\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    for num in nums:\n",
+       "        if num % 7 == 0:\n",
+       "            return True\n",
+       "    # We've exhausted the list without finding a lucky number\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "Here's a one-line version using a list comprehension with Python's `any` function (you can read about what it does by calling `help(any)`):\n",
+       "\n",
+       "```python\n",
+       "def has_lucky_number(nums):\n",
+       "    return any([num % 7 == 0 for num in nums])\n",
+       "```"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "q1.hint()\n",
+    "q1.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "370e0456",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003255,
+     "end_time": "2026-02-22T06:11:01.094438",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.091183",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# 2.\n",
+    "Look at the Python expression below. What do you think we'll get when we run it? When you've made your prediction, uncomment the code and run the cell to see if you were right."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 5,
+   "id": "04f86da9",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.102535Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.102192Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.106342Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.105306Z"
+    },
+    "papermill": {
+     "duration": 0.010008,
+     "end_time": "2026-02-22T06:11:01.107851",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.097843",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "#[1, 2, 3, 4] > 2"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "08bd86f3",
+   "metadata": {
+    "papermill": {
+     "duration": 0.003169,
+     "end_time": "2026-02-22T06:11:01.115379",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.112210",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "R and Python have some libraries (like numpy and pandas) compare each element of the list to 2 (i.e. do an 'element-wise' comparison) and give us a list of booleans like `[False, False, True, True]`. \n",
+    "\n",
+    "Implement a function that reproduces this behaviour, returning a list of booleans corresponding to whether the corresponding element is greater than n."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 6,
+   "id": "c1571eea",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.122881Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.122606Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.130763Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.129831Z"
+    },
+    "papermill": {
+     "duration": 0.013857,
+     "end_time": "2026-02-22T06:11:01.132469",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.118612",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "name": "stdout",
+     "output_type": "stream",
+     "text": [
+      "0\n",
+      "1\n",
+      "2\n",
+      "3\n",
+      "[False, False, True, True]\n",
+      "0\n",
+      "1\n",
+      "2\n",
+      "3\n",
+      "[False, False, False, False]\n",
+      "[]\n",
+      "0\n",
+      "1\n",
+      "[True, True]\n"
+     ]
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"2_ElementWiseComparison\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc33\">Correct:</span> \n",
+       "\n",
+       "Here's one solution:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    res = []\n",
+       "    for ele in L:\n",
+       "        res.append(ele > thresh)\n",
+       "    return res\n",
+       "```\n",
+       "\n",
+       "And here's the list comprehension version:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    return [ele > thresh for ele in L]\n",
+       "```\n"
+      ],
+      "text/plain": [
+       "Correct: \n",
+       "\n",
+       "Here's one solution:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    res = []\n",
+       "    for ele in L:\n",
+       "        res.append(ele > thresh)\n",
+       "    return res\n",
+       "```\n",
+       "\n",
+       "And here's the list comprehension version:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    return [ele > thresh for ele in L]\n",
+       "```"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "def elementwise_greater_than(L, thresh):\n",
+    "    \"\"\"Return a list with the same length as L, where the value at index i is \n",
+    "    True if L[i] is greater than thresh, and False otherwise.\n",
+    "    \n",
+    "    >>> elementwise_greater_than([1, 2, 3, 4], 2)\n",
+    "    [False, False, True, True]\n",
+    "    \"\"\"\n",
+    "    a = []\n",
+    "    cnt = -1 ;\n",
+    "    for i in L:\n",
+    "        cnt = cnt + 1;\n",
+    "        print(cnt)\n",
+    "        if i > thresh:\n",
+    "            a.append(True)\n",
+    "        else:\n",
+    "            a.append(False)\n",
+    "    \n",
+    "    print(a)\n",
+    "    return a\n",
+    "# Check your answer\n",
+    "q2.check()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 7,
+   "id": "e7183d55",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.142316Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.142018Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.149254Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.148105Z"
+    },
+    "papermill": {
+     "duration": 0.013718,
+     "end_time": "2026-02-22T06:11:01.150735",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.137017",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"2_ElementWiseComparison\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc99\">Solution:</span> Here's one solution:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    res = []\n",
+       "    for ele in L:\n",
+       "        res.append(ele > thresh)\n",
+       "    return res\n",
+       "```\n",
+       "\n",
+       "And here's the list comprehension version:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    return [ele > thresh for ele in L]\n",
+       "```\n"
+      ],
+      "text/plain": [
+       "Solution: Here's one solution:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    res = []\n",
+       "    for ele in L:\n",
+       "        res.append(ele > thresh)\n",
+       "    return res\n",
+       "```\n",
+       "\n",
+       "And here's the list comprehension version:\n",
+       "```python\n",
+       "def elementwise_greater_than(L, thresh):\n",
+       "    return [ele > thresh for ele in L]\n",
+       "```"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "q2.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "7ff9a9ce",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004814,
+     "end_time": "2026-02-22T06:11:01.159952",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.155138",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# 3.\n",
+    "\n",
+    "Complete the body of the function below according to its docstring."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 8,
+   "id": "ccf1c836",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.169149Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.168851Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.177547Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.176532Z"
+    },
+    "papermill": {
+     "duration": 0.014774,
+     "end_time": "2026-02-22T06:11:01.178777",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.164003",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"outcomeType\": 1, \"valueTowardsCompletion\": 0.25, \"interactionType\": 1, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\"}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc33\">Correct:</span> \n",
+       "\n",
+       "\n",
+       "\n",
+       "```python\n",
+       "def menu_is_boring(meals):\n",
+       "    # Iterate over all indices of the list, except the last one\n",
+       "    for i in range(len(meals)-1):\n",
+       "        if meals[i] == meals[i+1]:\n",
+       "            return True\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "The key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n",
+       "\n",
+       "But don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.\n"
+      ],
+      "text/plain": [
+       "Correct: \n",
+       "\n",
+       "\n",
+       "\n",
+       "```python\n",
+       "def menu_is_boring(meals):\n",
+       "    # Iterate over all indices of the list, except the last one\n",
+       "    for i in range(len(meals)-1):\n",
+       "        if meals[i] == meals[i+1]:\n",
+       "            return True\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "The key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n",
+       "\n",
+       "But don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "def menu_is_boring(meals):\n",
+    "    \"\"\"Given a list of meals served over some period of time, return True if the\n",
+    "    same meal has ever been served two days in a row, and False otherwise.\n",
+    "    \"\"\"\n",
+    "    for meal in range(len(meals)-1):\n",
+    "        if meals[meal]==meals[meal+1]:\n",
+    "            return True\n",
+    "    return False\n",
+    "        \n",
+    "\n",
+    "# Check your answer\n",
+    "q3.check()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 9,
+   "id": "0c6f90ce",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.187967Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.187740Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.198135Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.197110Z"
+    },
+    "papermill": {
+     "duration": 0.017185,
+     "end_time": "2026-02-22T06:11:01.200134",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.182949",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 2, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#3366cc\">Hint:</span> This is a case where it may be preferable to iterate over the *indices* of the list (using a call to `range()`) rather than iterating over the elements of the list itself. When indexing into the list, be mindful that you're not \"falling off the end\" (i.e. using an index that doesn't exist)."
+      ],
+      "text/plain": [
+       "Hint: This is a case where it may be preferable to iterate over the *indices* of the list (using a call to `range()`) rather than iterating over the elements of the list itself. When indexing into the list, be mindful that you're not \"falling off the end\" (i.e. using an index that doesn't exist)."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 2, \"questionId\": \"3_BoringMenu\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc99\">Solution:</span> \n",
+       "\n",
+       "```python\n",
+       "def menu_is_boring(meals):\n",
+       "    # Iterate over all indices of the list, except the last one\n",
+       "    for i in range(len(meals)-1):\n",
+       "        if meals[i] == meals[i+1]:\n",
+       "            return True\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "The key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n",
+       "\n",
+       "But don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop.\n"
+      ],
+      "text/plain": [
+       "Solution: \n",
+       "\n",
+       "```python\n",
+       "def menu_is_boring(meals):\n",
+       "    # Iterate over all indices of the list, except the last one\n",
+       "    for i in range(len(meals)-1):\n",
+       "        if meals[i] == meals[i+1]:\n",
+       "            return True\n",
+       "    return False\n",
+       "```\n",
+       "\n",
+       "The key to our solution is the call to `range`. `range(len(meals))` would give us all the indices of `meals`. If we had used that range, the last iteration of the loop would be comparing the last element to the element after it, which is... `IndexError`! `range(len(meals)-1)` gives us all the indices except the index of the last element.\n",
+       "\n",
+       "But don't we need to check if `meals` is empty? Turns out that `range(0) == range(-1)` - they're both empty. So if `meals` has length 0 or 1, we just won't do any iterations of our for loop."
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "q3.hint()\n",
+    "q3.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "c395e22d",
+   "metadata": {
+    "papermill": {
+     "duration": 0.005016,
+     "end_time": "2026-02-22T06:11:01.211032",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.206016",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# 4. <span title=\"A bit spicy\" style=\"color: darkgreen \">🌶️</span>\n",
+    "\n",
+    "Next to the Blackjack table, the Python Challenge Casino has a slot machine. You can get a result from the slot machine by calling `play_slot_machine()`. The number it returns is your winnings in dollars. Usually it returns 0.  But sometimes you'll get lucky and get a big payday. Try running it below:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 10,
+   "id": "7bd081ee",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.221948Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.221604Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.228590Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.227101Z"
+    },
+    "papermill": {
+     "duration": 0.014664,
+     "end_time": "2026-02-22T06:11:01.230361",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.215697",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "text/plain": [
+       "0"
+      ]
+     },
+     "execution_count": 10,
+     "metadata": {},
+     "output_type": "execute_result"
+    }
+   ],
+   "source": [
+    "play_slot_machine()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "b13f89fc",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004548,
+     "end_time": "2026-02-22T06:11:01.240158",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.235610",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "By the way, did we mention that each play costs $1? Don't worry, we'll send you the bill later.\n",
+    "\n",
+    "On average, how much money can you expect to gain (or lose) every time you play the machine?  The casino keeps it a secret, but you can estimate the average value of each pull using a technique called the **Monte Carlo method**. To estimate the average outcome, we simulate the scenario many times, and return the average result.\n",
+    "\n",
+    "Complete the following function to calculate the average value per play of the slot machine."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 11,
+   "id": "6db4b786",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.250577Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.250314Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.255361Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.253553Z"
+    },
+    "papermill": {
+     "duration": 0.012612,
+     "end_time": "2026-02-22T06:11:01.257436",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.244824",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [],
+   "source": [
+    "def estimate_average_slot_payout(n_runs):\n",
+    "    \"\"\"Run the slot machine n_runs times and return the average net profit per run.\n",
+    "    Example calls (note that return value is nondeterministic!):\n",
+    "    >>> estimate_average_slot_payout(1)\n",
+    "    -1\n",
+    "    >>> estimate_average_slot_payout(1)\n",
+    "    0.5\n",
+    "    \"\"\"\n",
+    "    return n_runs/n_runs"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "39d4092b",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004477,
+     "end_time": "2026-02-22T06:11:01.267848",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.263371",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "When you think you know the expected value per spin, run the code cell below to view the solution and get credit for answering the question."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": 12,
+   "id": "72ffafef",
+   "metadata": {
+    "execution": {
+     "iopub.execute_input": "2026-02-22T06:11:01.278985Z",
+     "iopub.status.busy": "2026-02-22T06:11:01.278723Z",
+     "iopub.status.idle": "2026-02-22T06:11:01.285621Z",
+     "shell.execute_reply": "2026-02-22T06:11:01.284486Z"
+    },
+    "papermill": {
+     "duration": 0.015003,
+     "end_time": "2026-02-22T06:11:01.287349",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.272346",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "outputs": [
+    {
+     "data": {
+      "application/javascript": [
+       "parent.postMessage({\"jupyterEvent\": \"custom.exercise_interaction\", \"data\": {\"interactionType\": 3, \"questionType\": 4, \"questionId\": \"4_ExpectedSlotsPayout\", \"learnToolsVersion\": \"0.3.5\", \"valueTowardsCompletion\": 0.0, \"failureMessage\": \"\", \"exceptionClass\": \"\", \"trace\": \"\", \"outcomeType\": 4}}, \"*\")"
+      ],
+      "text/plain": [
+       "<IPython.core.display.Javascript object>"
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    },
+    {
+     "data": {
+      "text/markdown": [
+       "<span style=\"color:#33cc99\">Solution:</span> \n",
+       "    \n",
+       "The exact expected value of one pull of the slot machine is 0.025 - i.e. a little more than 2 cents.  See?  Not every game in the Python Challenge Casino is rigged against the player!\n",
+       "\n",
+       "In order to get this answer, you'll need to implement the `estimate_average_slot_payout(n_runs)` function to simulate pulling the slot machine `n_runs` times.  It should return the payout averaged over those `n_runs`.\n",
+       "\n",
+       "Then, once the function is defined, in order to estimate the average slot payout, we need only call the function.\n",
+       "\n",
+       "Because of the high variance of the outcome (there are some very rare high payout results that significantly affect the average) you might need to run your function with a very high value of `n_runs` to get a stable answer close to the true expectation.  For instance, you might use a value for `n_runs` of 1000000.\n",
+       "\n",
+       "Here's an example for how the function could look:\n",
+       "```python\n",
+       "def estimate_average_slot_payout(n_runs):\n",
+       "    # Play slot machine n_runs times, calculate payout of each\n",
+       "    payouts = [play_slot_machine()-1 for i in range(n_runs)]\n",
+       "    # Calculate the average value\n",
+       "    avg_payout = sum(payouts) / n_runs\n",
+       "    return avg_payout\n",
+       "    \n",
+       "estimate_average_slot_payout(10000000)\n",
+       "\n",
+       "```\n",
+       "\n",
+       "This should return an answer close to 0.025!\n",
+       "            \n"
+      ],
+      "text/plain": [
+       "Solution: \n",
+       "    \n",
+       "The exact expected value of one pull of the slot machine is 0.025 - i.e. a little more than 2 cents.  See?  Not every game in the Python Challenge Casino is rigged against the player!\n",
+       "\n",
+       "In order to get this answer, you'll need to implement the `estimate_average_slot_payout(n_runs)` function to simulate pulling the slot machine `n_runs` times.  It should return the payout averaged over those `n_runs`.\n",
+       "\n",
+       "Then, once the function is defined, in order to estimate the average slot payout, we need only call the function.\n",
+       "\n",
+       "Because of the high variance of the outcome (there are some very rare high payout results that significantly affect the average) you might need to run your function with a very high value of `n_runs` to get a stable answer close to the true expectation.  For instance, you might use a value for `n_runs` of 1000000.\n",
+       "\n",
+       "Here's an example for how the function could look:\n",
+       "```python\n",
+       "def estimate_average_slot_payout(n_runs):\n",
+       "    # Play slot machine n_runs times, calculate payout of each\n",
+       "    payouts = [play_slot_machine()-1 for i in range(n_runs)]\n",
+       "    # Calculate the average value\n",
+       "    avg_payout = sum(payouts) / n_runs\n",
+       "    return avg_payout\n",
+       "    \n",
+       "estimate_average_slot_payout(10000000)\n",
+       "\n",
+       "```\n",
+       "\n",
+       "This should return an answer close to 0.025!\n",
+       "            "
+      ]
+     },
+     "metadata": {},
+     "output_type": "display_data"
+    }
+   ],
+   "source": [
+    "# Check your answer (Run this code cell to receive credit!)\n",
+    "q4.solution()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "74123594",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004519,
+     "end_time": "2026-02-22T06:11:01.297244",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.292725",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "# Keep Going\n",
+    "\n",
+    "Many programmers report that dictionaries are their favorite data structure. You'll get to **[learn about them](https://www.kaggle.com/colinmorris/strings-and-dictionaries)** (as well as strings) in the next lesson."
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fbd5f904",
+   "metadata": {
+    "papermill": {
+     "duration": 0.004778,
+     "end_time": "2026-02-22T06:11:01.307028",
+     "exception": false,
+     "start_time": "2026-02-22T06:11:01.302250",
+     "status": "completed"
+    },
+    "tags": []
+   },
+   "source": [
+    "---\n",
+    "\n",
+    "\n",
+    "\n",
+    "\n",
+    "*Have questions or comments? Visit the [course discussion forum](https://www.kaggle.com/learn/python/discussion) to chat with other learners.*"
+   ]
+  }
+ ],
+ "metadata": {
+  "kaggle": {
+   "accelerator": "none",
+   "dataSources": [],
+   "dockerImageVersionId": 31153,
+   "isGpuEnabled": false,
+   "isInternetEnabled": false,
+   "language": "python",
+   "sourceType": "notebook"
+  },
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.11.13"
+  },
+  "learntools_metadata": {
+   "lesson_index": 4,
+   "type": "exercise"
+  },
+  "papermill": {
+   "default_parameters": {},
+   "duration": 7.244179,
+   "end_time": "2026-02-22T06:11:01.932071",
+   "environment_variables": {},
+   "exception": null,
+   "input_path": "__notebook__.ipynb",
+   "output_path": "__notebook__.ipynb",
+   "parameters": {},
+   "start_time": "2026-02-22T06:10:54.687892",
+   "version": "2.6.0"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}
